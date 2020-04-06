@@ -1,0 +1,46 @@
+<h1>ToDo list</h1>
+<hr>
+<div class="form-group">
+  <label for="task">Enter your task:</label>
+  <input type="text" [(ngModel)]="currentTask" class="form-control" id="task"><br>
+  <button class="btn btn-success"
+          [disabled]="currentTask.length === 0"
+          (click)="onAdd()">Add task
+  </button>
+</div>
+<h2>Tasks for today</h2>
+<app-no-content *ngIf="tasks.length === 0; else refTask"></app-no-content>
+
+<ng-template #refTask>
+  <div class="task" *ngFor="let taskItem of tasks; let i = index">
+    <div class="row">
+      <div class="col-sm-4">
+        <app-todo-list-item [task]="i + 1 + '. ' + taskItem"></app-todo-list-item>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-danger" (click)="onRemove(i)">Remove</button>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-success" (click)="onDone(i)">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<hr>
+<div *ngIf="doneTasks.length > 0">
+  <h3>Done</h3>
+  <div class="row" *ngFor="let doneTask of doneTasks">
+    <div class="col-sm-12">
+      <div [ngClass]="{
+        'alert': true,
+        'alert-info': doneTask.length >= 10,
+        'alert-dark': doneTask.length < 10
+      }" role="alert">
+        <span [ngStyle]="{color: doneTask.length >= 10 ? 'red' : 'green'}">
+          {{doneTask}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
