@@ -1,0 +1,10 @@
+<h1>Server list</h1>
+<button class="btn btn-success" (click)="addServer()">
+  Add server
+</button>
+<hr>
+<div *ngIf="servers">
+<p *ngFor="let server of servers">
+  {{server}}
+</p>
+</div>
