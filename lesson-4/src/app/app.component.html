@@ -1,0 +1,24 @@
+<mat-sidenav-container
+  class="example-container" (backdropClick)="sidenav.close()">
+  <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose>
+    <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <p><button mat-button (click)="sidenav.open()">Open</button></p>
+    <div class="container">
+      <p>App Component paragraph</p>
+      <app-server-form
+        (addNewServer)="onAddServer($event)"
+        (addNewMirror)="onAddMirror($event)"
+      ></app-server-form>
+      <hr>
+      <app-server-list *ngIf="isShow" [elements]="serverElements">
+        <h2 #h2Ref>Server List Component</h2>
+        <p>Lorem ipsup</p>
+      </app-server-list>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
