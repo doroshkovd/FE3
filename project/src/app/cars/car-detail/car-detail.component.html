@@ -1,5 +1,10 @@
+<ng-container *ngIf="!car">
+  <h3>Please choose car</h3>
+</ng-container>
+<ng-container *ngIf="!!car">
 <div class="row">
   <div class="col-xs-12">
+
     <img src="{{car.imagePath}}"
          alt="{{car.name}}"
          style="max-width: 400px"
@@ -16,7 +21,7 @@
     <div class="btn-group">
       <button
         type="button"
-        class="btn btn-primary dropdown-toggle">
+        class="btn btn-primary dropdown-toggle open">
         Manage Car <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
@@ -37,3 +42,4 @@
     Parts
   </div>
 </div>
+</ng-container>

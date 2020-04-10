@@ -8,6 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   isDisabled = false;
   title = 'test-app';
+  activePage = 'cars';
 
   constructor() {}
+
+  onMenuClick(page: string) {
+    this.activePage = page;
+  }
 }

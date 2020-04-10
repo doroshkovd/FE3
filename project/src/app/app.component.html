@@ -1,9 +1,11 @@
-<app-header></app-header>
+<header>
+  <app-header (menuClick)="onMenuClick($event)"></app-header>
+</header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-cars></app-cars>
-      <app-shopping-list></app-shopping-list>
+      <app-cars *ngIf="activePage === 'cars'"></app-cars>
+      <app-shopping-list *ngIf="activePage === 'shopping-list'"></app-shopping-list>
     </div>
   </div>
 </div>

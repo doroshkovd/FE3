@@ -1,1 +1,12 @@
-<p>shopping-list works!</p>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Shopping list</h2>
+    <hr>
+    <app-shopping-list-edit (addPart)="onAddPart($event)"></app-shopping-list-edit>
+    <div class="list-group">
+      <a *ngFor="let part of parts" class="list-group-item list-group-item-action">
+        {{part.name}} ({{part.amount}})
+      </a>
+    </div>
+  </div>
+</div>
