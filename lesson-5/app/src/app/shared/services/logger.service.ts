@@ -1,0 +1,6 @@
+log(msg) {
+
+}
+
+history: [];
+
