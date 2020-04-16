@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Part } from "../shared/models/part.model";
+import { PartsService } from "../shared/services/parts/parts.service";
 
 @Component({
   selector: 'app-shopping-list',
@@ -7,16 +8,13 @@ import { Part } from "../shared/models/part.model";
   styleUrls: ['./shopping-list.component.scss']
 })
 export class ShoppingListComponent implements OnInit {
-  parts: Part[] = [
-    {name: 'Wheel', amount: 1},
-    {name: 'Engine', amount: 1},
-    {name: 'mirror', amount: 4}
-  ];
+  parts: Part[];
 
-  constructor() {
+  constructor(private partsService: PartsService) {
   }
 
   ngOnInit(): void {
+      this.parts = this.partsService.parts;
   }
 
   onAddPart(part: Part) {

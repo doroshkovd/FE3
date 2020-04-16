@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Add user</h2>
+      <label>Name:</label> <br />
+      <input type="text" [(ngModel)]="user.name" /><br />
+      <label>Email:</label> <br />
+      <input type="text" [(ngModel)]="user.email" /><br />
+      <label>Role:</label> <br />
+      <select [(ngModel)]="user.role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select><br><br>
+      <button (click)="onAddUser()">Add User</button>
+    </div>
+  </div>
+</div>

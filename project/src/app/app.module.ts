@@ -10,6 +10,7 @@ import { CarDetailComponent } from './cars/car-detail/car-detail.component';
 import { CarListComponent } from './cars/car-list/car-list.component';
 import { CarItemComponent } from './cars/car-list/car-item/car-item.component';
 import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/shopping-list-edit.component';
+import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/sh
     CarListComponent,
     CarItemComponent,
     ShoppingListEditComponent,
+    DropdownDirective,
   ],
   imports: [
     BrowserModule,
