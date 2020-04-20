@@ -1,26 +1,30 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-8 offset-sm-1 offset-md-2">
-      <ul class="nav nav-tabs">
-        <li role="presentation" class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#">Servers</a></li>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#">Users</a></li>
+      <ul class="nav nav-tabs mb-3">
+        <li role="presentation" class="nav-item">
+          <a class="nav-link"
+             routerLink="/"
+             [routerLinkActive]="'active'"
+             [routerLinkActiveOptions]="{exact: true}"
+          >Home</a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a class="nav-link"
+             routerLink="/servers"
+             [routerLinkActive]="'active'"
+          >Servers</a></li>
+        <li role="presentation" class="nav-item">
+          <a class="nav-link"
+             [routerLink]="['/users']"
+             [routerLinkActive]="'active'"
+          >Users</a></li>
       </ul>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-8 offset-sm-1 offset-md-2">
-      <app-home></app-home>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-md-8 offset-sm-1 offset-md-2">
-      <app-users></app-users>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-md-8 offset-sm-1 offset-md-2">
-      <app-servers></app-servers>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

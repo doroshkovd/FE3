@@ -10,6 +10,9 @@ import { ServersComponent } from "./servers/servers.component";
 import { UserComponent } from "./users/user/user.component";
 import { FormsModule } from "@angular/forms";
 import { UsersComponent } from "./users/users.component";
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuard } from "./services/auth/auth.guard";
+import { ServersGuard } from "./services/servers/servers.guard";
 
 @NgModule({
   declarations: [
@@ -19,14 +22,15 @@ import { UsersComponent } from "./users/users.component";
     ServerComponent,
     ServersComponent,
     UserComponent,
-    UsersComponent
+    UsersComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
