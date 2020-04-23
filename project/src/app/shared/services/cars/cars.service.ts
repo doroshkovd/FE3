@@ -9,9 +9,9 @@ import { BehaviorSubject, Subject } from "rxjs";
 export class CarsService {
 
   private _cars: Car[] = [
-    new Car('Ford', 'Some description',
+    new Car(1, 'Ford', 'Some description',
       'https://avatars.mds.yandex.net/get-autoru-vos/1973880/c290547d992c4c148e894d2d4ec73fa4/1200x900n'),
-    new Car('Ford', 'Some description',
+    new Car(2, 'Red Car', 'Some description',
       'https://specials-images.forbesimg.com/imageserve/5d35eacaf1176b0008974b54/960x0.jpg?cropX1=790&cropX2=5350&cropY1=784&cropY2=3349'),
   ];
 
@@ -23,8 +23,12 @@ export class CarsService {
 
   constructor() { }
 
-  getActiveCar() {
-    return this._activeCar;
+  getCarById(id: number): Car {
+    return this._cars.find((car: Car) => car.id === id);
+  }
+
+  getActiveCar(id) {
+    return this._activeCar.asObservable();
   }
 
   setActiveCar(car: Car): void {

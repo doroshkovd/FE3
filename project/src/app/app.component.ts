@@ -11,8 +11,4 @@ export class AppComponent {
   activePage = 'cars';
 
   constructor() {}
-
-  onMenuClick(page: string) {
-    this.activePage = page;
-  }
 }

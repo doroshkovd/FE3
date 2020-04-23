@@ -26,7 +26,7 @@
       </button>
       <ul class="dropdown-menu">
         <li class="dropdown-item"><a dropdown-item href="#">To Parts Storage</a></li>
-        <li class="dropdown-item"><a href="#">Edit Car</a></li>
+        <li class="dropdown-item"><a [routerLink]="['/cars', 'edit', car.id ]">Edit Car</a></li>
         <li class="dropdown-item"><a href="#">Delete Car</a></li>
       </ul>
     </div>

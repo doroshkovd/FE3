@@ -1,0 +1,74 @@
+<div *ngIf="false" class="container">
+  <div class="row">
+    <div class="col-sm-12">
+<!--      <p>-->
+<!--        {{ name | lowercase}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        {{ name | uppercase}}-->
+<!--      </p>-->
+      <p>
+        {{ name | slice:4 | uppercase | reverse:1}}
+      </p>
+<!--      <p>-->
+<!--        {{pi}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        {{pi | number}}-->
+<!--        {{pi | number:'2.3-5'}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        {{money | currency:'EUR'}}-->
+<!--      </p>-->
+      <p>
+        {{date | date: 'shortDate'}}<br>
+        {{date | date: 'fullDate'}}<br>
+        {{date | date: 'shortTime'}}
+      </p>
+<!--      <p>-->
+<!--        {{date | date | uppercase}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        {{amount}}-->
+<!--        {{amount | percent}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        {{object}}-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        {{object | json}}-->
+<!--      </p>-->
+    </div>
+  </div>
+</div>
+<div *ngIf="true" class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <input class="form-control mt-3 mb-3" [(ngModel)]="filterStr" name="filter">
+      <select class="form-control mt-3 mb-3" [(ngModel)]="filterField" (change)="check()">
+        <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
+      </select>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">First day</th>
+          <th scope="col">City</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users$ | async | filter:filterStr:filterField; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{user.name}}</td>
+          <td title="{{user.email}}">{{user.email | dot: 15}}</td>
+          <td>{{user.startDate | date:'fullDate'}}</td>
+          <td>{{user.address}}</td>
+        </tr>
+        </tbody>
+      </table>
+<button class="btn btn-success" (click)="addUsers()">Add users</button>
+    </div>
+  </div>
+</div>

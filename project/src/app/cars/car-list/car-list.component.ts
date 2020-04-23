@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Car } from "../../shared/models/car.model";
 import { CarsService } from "../../shared/services/cars/cars.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-car-list',
@@ -10,14 +11,13 @@ import { CarsService } from "../../shared/services/cars/cars.service";
 export class CarListComponent implements OnInit {
   cars: Car[];
 
-  constructor(private carsService: CarsService) { }
+  constructor(private carsService: CarsService, private router: Router) { }
 
   ngOnInit(): void {
     this.cars = this.carsService.cars;
-    console.log(this.cars);
   }
 
-  selectCar(index: number) {
-    this.carsService.setActiveCar(this.cars[index]);
+  onNewCarClick(): void {
+    this.router.navigate(['/cars', 'add']);
   }
 }

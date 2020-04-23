@@ -7,13 +7,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 })
 
 export class HeaderComponent {
-  @Output() menuClick: EventEmitter<string> = new EventEmitter<string>();
-  links: string[] = ['cars', 'shopping-list'];
   collapsed = false;
   constructor() {
-  }
-
-  onMenuClick(item: number) {
-    this.menuClick.emit(this.links[item]);
   }
 }

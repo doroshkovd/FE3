@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-sm-12">
-    <button class="btn btn-success">New Car</button>
+    <button class="btn btn-success" (click)="onNewCarClick()">New Car</button>
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="col-sm-12">
     <app-car-item *ngFor="let car of cars; let i = index"
-                  [car]="car" (click)="selectCar(i)"></app-car-item>
+                  [car]="car"></app-car-item>
   </div>
 </div>

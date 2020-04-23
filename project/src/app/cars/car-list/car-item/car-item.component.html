@@ -1,4 +1,7 @@
-<a href="#" class="list-group-item clearfix">
+<a [routerLink]="['/cars/', car.id ]"
+   routerLinkActive="active"
+   class="list-group-item clearfix">
+
   <div class="float-left">
     <h4 class="list-group-item-heading">{{ car.name }}</h4>
     <p class="list-group-item-text">{{ car.description }}</p>
