@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Part } from "../../shared/models/part.model";
+import { PartsService } from "../../shared/services/parts/parts.service";
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -11,8 +12,7 @@ export class ShoppingListEditComponent implements OnInit {
   @ViewChild('nameInput') nameInput: ElementRef;
   @ViewChild('amountInput') amountInput: ElementRef;
 
-  @Output() addPart: EventEmitter<Part> = new EventEmitter<Part>();
-  constructor() { }
+  constructor(private partsService: PartsService) { }
 
   ngOnInit(): void {
   }
@@ -22,8 +22,7 @@ export class ShoppingListEditComponent implements OnInit {
       name: this.nameInput.nativeElement.value,
       amount: this.amountInput.nativeElement.value,
     };
-
-    this.addPart.emit(part);
+    this.partsService.addParts([part]);
     return false;
   }
 

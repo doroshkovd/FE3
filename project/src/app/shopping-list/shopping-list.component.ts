@@ -1,24 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Part } from "../shared/models/part.model";
 import { PartsService } from "../shared/services/parts/parts.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss']
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListComponent implements OnInit, OnDestroy {
   parts: Part[];
+  partsSubscribtion: Subscription;
 
   constructor(private partsService: PartsService) {
   }
 
   ngOnInit(): void {
-      this.parts = this.partsService.parts;
+      this.partsSubscribtion = this.partsService.parts
+        .subscribe((parts: Part[]) => {
+          this.parts = parts;
+        });
   }
 
-  onAddPart(part: Part) {
-    this.parts.push(part);
-    return false;
+  ngOnDestroy(): void {
+    this.partsSubscribtion.unsubscribe();
   }
 }

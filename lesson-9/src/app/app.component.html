@@ -1,26 +1,107 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-10 col-md-8 offset-sm-2 offset-md-4">
-      <form>
-        <div id="user-data">
+    <div class="col-sm-10 col-md-8 offset-sm-2 offset-md-2">
+      <form (ngSubmit)="onFormSubmit(form)" #form="ngForm">
+        <div ngModelGroup="userData" id="user-data" #userData="ngModelGroup">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" class="form-control">
+            <input type="text"
+                   id="username"
+                   name="username"
+                   class="form-control"
+                   ngModel
+                   required
+                   minlength="4"
+                   #username="ngModel"
+            >
+            <p *ngIf="username.errors && username.errors.required && username.touched" class="text-danger">
+              This field is required</p>
+            <p *ngIf="username.errors?.minlength && username.touched" class="text-danger">
+              Minlength should be {{username.errors?.minlength.requiredLength}},
+              current length is {{username.errors?.minlength.actualLength }}
+            </p>
+            <p *ngIf="username.valid && username.touched" class="text-success">
+              This field is valid</p>
           </div>
-          <button class="btn btn-secondary" type="button">Suggest an Username</button>
+          <button class="btn btn-secondary"
+                  type="button"
+                  (click)="suggestName()">Suggest an Username</button>
           <div class="form-group">
             <label for="email">Mail</label>
-            <input type="email" id="email" class="form-control">
+            <input type="email"
+                   id="email"
+                   class="form-control"
+                   ngModel
+                   name="email"
+                   required
+                   minlength="4"
+                   email
+                   #email="ngModel"
+            >
+            <p *ngIf="email.invalid && email.touched" class="text-danger">
+              This field is invalid</p>
+            <p *ngIf="email.valid && email.touched" class="text-success">
+              This field is valid</p>
           </div>
+        </div>
+        <p *ngIf="userData.invalid && userData.touched" class="text-danger">
+          User data are wrong
+        </p>
+        <div class="form-group">
+          <label for="url">Url</label>
+          <input type="text"
+                 id="url"
+                 class="form-control"
+                 ngModel
+                 name="url"
+                 #url="ngModel"
+                 appUrlValidator
+          >
+<!--          <p *ngIf="email.invalid && email.touched" class="text-danger">-->
+<!--            This field is invalid</p>-->
+        </div>
+        <div>Your gender:</div>
+        <div class="form-group" *ngFor="let gender of genders; let i = index">
+          <label for="gender{{i}}" [innerHTML]="gender.label + ': '"></label>
+          <input [value]="gender.value"
+                 type="radio"
+                 ngModel
+                 required
+                 id="gender{{i}}"
+                 name="gender"
+          >
         </div>
         <div class="form-group">
           <label for="secret">Secret Questions</label>
-          <select id="secret" class="form-control">
+          <select id="secret"
+                  class="form-control"
+                  [ngModel]="secret"
+                  name="question"
+                  required
+                  #question="ngModel"
+          >
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
           </select>
+          <p *ngIf="question.invalid && question.touched" class="text-danger">
+            This field is invalid</p>
+          <p *ngIf="question.valid && question.touched" class="text-success">
+            This field is valid</p>
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="form-group">
+          <label for="terms">You have to accept terms and conditions: </label>
+          <input type="checkbox"
+                 name="terms"
+                 id="terms"
+                 ngModel
+                 required>
+        </div>
+        <button class="btn btn-primary"
+                type="submit"
+                [disabled]="!form.invalid"
+        >Submit</button>
+        <button class="btn btn-warning" (click)="clearForm()"
+        >Clear</button>
       </form>
     </div>
   </div>
