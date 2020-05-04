@@ -13,6 +13,7 @@ import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/sh
 import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { NoCarsComponent } from './cars/no-cars/no-cars.component';
 import { AddEditCarComponent } from './cars/add-edit-car/add-edit-car.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AddEditCarComponent } from './cars/add-edit-car/add-edit-car.component'
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
   ],
   providers: [],

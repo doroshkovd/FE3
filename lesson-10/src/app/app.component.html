@@ -2,13 +2,17 @@
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
       <h2 class="py-5">Registration form</h2>
-      <form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input type="email"
                  class="form-control"
                  id="exampleInputEmail1"
-                 aria-describedby="emailHelp">
+                 aria-describedby="emailHelp"
+                 formControlName="email"
+          >
+          <div *ngIf="email.pending">Loading...</div>
+<!--          <div *ngIf="email.invalid && email.touched">Error</div>-->
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
@@ -16,35 +20,51 @@
           <input type="text"
                  class="form-control"
                  id="url-input"
+                 formControlName="url"
           >
         </div>
-        <div>
+        <div formArrayName="exp">
           <div class="form-group">
             <label>Job exp.</label>
+            <ng-container *ngFor="let exp of getExpControls.controls; let i = index">
             <input type="text"
+                   [formControlName]="i"
                    class="form-control"
                    id="job-exp">
+              <hr>
+              <button *ngIf="i > 0" (click)="removeExp(i)">Remove exp.</button>
+            </ng-container>
+            <hr>
+            <button class="btn btn-warning" (click)="addExp()">Add exp. input</button>
           </div>
         </div>
-        <div>
+        <div formGroupName="pswGroup">
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password"
                    class="form-control"
                    id="exampleInputPassword1"
+                   formControlName="psw1"
             >
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword2">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword2"
+            <label for="exampleInputPassword2">Repeat Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="exampleInputPassword2"
+                   formControlName="psw2"
             >
           </div>
         </div>
         <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="exampleCheck1"
+                 formControlName="terms"
+          >
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" [disabled]="!form.invalid" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
