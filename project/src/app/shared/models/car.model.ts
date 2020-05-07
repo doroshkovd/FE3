@@ -6,6 +6,6 @@ export class Car {
     public name: string,
     public description: string,
     public imagePath: string,
-    public parts: Part[],
+    public parts?: Part[],
   ){}
 }

@@ -39,19 +39,21 @@
       <button class="btn btn-primary" (click)="onFetchPosts()">
         Fetch Posts
       </button>
-      |
-      <button
-        class="btn btn-danger"
-        [disabled]="loadedPosts.length < 1"
-        (click)="onClearPosts()"
-      >
-        Clear Posts
-      </button>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-6 offset-md-3">
+    <div *ngIf="loadedPosts?.length === 0" class="col-sm-12 col-md-6 offset-md-3">
       <p>No posts available!</p>
     </div>
+    <ng-container *ngIf="loadedPosts.length > 0">
+      <div *ngFor="let post of loadedPosts; let i = index" class="col-sm-12">
+        <h2>{{post.title}}</h2>
+        <p>{{post.content}}</p><br>
+        <button class="btn btn-danger" (click)="onGetPost(post.id)">Get post</button>
+        <button class="btn btn-warning" (click)="onUpdatePost(post, i)">Update post</button>
+        <button class="btn btn-success" (click)="onDeletePost(post.id, i)">Delete post</button>
+        <hr>
+      </div>
+    </ng-container>
   </div>
 </div>
