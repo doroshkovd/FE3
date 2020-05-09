@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Car } from "../../models/car.model";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,29 @@ export class CarsService {
   constructor(private http: HttpClient) { }
 
   addCar(car) {
-    return this.http.post('https://fe3-course.firebaseio.com/cars.json', car);
+    return this.http.post('https://fe3-course.firebaseio.com/cars.json', car)
+      .pipe(
+        tap((data: {name: string}) => {
+          this._cars.push({id: data.name, ...car})
+        })
+      );
   }
 
   updateCar(id: string, car) {
-    return this.http.put(`https://fe3-course.firebaseio.com/cars/${id}.json`, car);
+    return this.http.put(`https://fe3-course.firebaseio.com/cars/${id}.json`, car)
+      .pipe(
+        tap(() => {
+          let index: number;
+          this._cars.forEach((item) => {
+            if (item.id === id) {
+              item.name = car.name;
+              item.description = car.description;
+              item.imagePath = car.imagePath;
+              item.parts = car.parts;
+            }
+          });
+        })
+      );
   }
 
   deleteCar(id) {
@@ -33,7 +51,13 @@ export class CarsService {
       .pipe(
         map(
           (data) => {
-          this._cars = this._cars.filter(car => car.id !== id);
+          let index: number;
+          this._cars.forEach((car, carIndex) => {
+            if (car.id === id) {
+              index = carIndex;
+            }
+          });
+          this._cars.splice(index, 1);
         }),
       );
   }
@@ -47,13 +71,12 @@ export class CarsService {
             cars.push({id: key, ...data[key]});
           }
           this._cars = cars;
-          return cars;
+          return this._cars;
         })
       );
   }
 
   getCarById(id: string): Car {
-    console.log(this._cars);
     return this._cars.find((car: Car) => car.id === id);
   }
 
