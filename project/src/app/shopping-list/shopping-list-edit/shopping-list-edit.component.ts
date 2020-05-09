@@ -20,11 +20,12 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.editedElementSubscription = this.partsService.editedElement
       .subscribe((element: {part: Part, index: number}) => {
+        console.log(element);
         if (element) {
           this.editedElement = element.part;
           this.editedIndex = element.index;
           this.isEdit = true;
-          this.form.setValue(element.part);
+          this.form.setValue({name: this.editedElement.name, amount: this.editedElement.amount });
         }
       })
   }
@@ -56,6 +57,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     if (!this.isEdit) {
       this.partsService.addParts([part]);
     } else {
+      part.id = this.editedElement.id;
       this.partsService.editPart(part, this.editedIndex);
     }
     this.isEdit = false;
