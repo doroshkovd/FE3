@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Car } from "../../models/car.model";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -8,18 +10,7 @@ import { BehaviorSubject, Subject } from "rxjs";
 
 export class CarsService {
 
-  private _cars: Car[] = [
-    new Car(
-      1,
-      'Ford',
-      'Some description',
-      'https://avatars.mds.yandex.net/get-autoru-vos/1973880/c290547d992c4c148e894d2d4ec73fa4/1200x900n',
-      [{name: 'new part 1', amount: 2}],
-    ),
-    new Car(2, 'Red Car', 'Some description',
-      'https://specials-images.forbesimg.com/imageserve/5d35eacaf1176b0008974b54/960x0.jpg?cropX1=790&cropX2=5350&cropY1=784&cropY2=3349',
-  []),
-  ];
+  private _cars: Car[] = [];
 
   private _activeCar: BehaviorSubject<Car> = new BehaviorSubject<Car>(null);
 
@@ -27,9 +18,42 @@ export class CarsService {
     return [...this._cars];
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getCarById(id: number): Car {
+  addCar(car) {
+    return this.http.post('https://fe3-course.firebaseio.com/cars.json', car);
+  }
+
+  updateCar(id: string, car) {
+    return this.http.put(`https://fe3-course.firebaseio.com/cars/${id}.json`, car);
+  }
+
+  deleteCar(id) {
+    return this.http.delete(`https://fe3-course.firebaseio.com/cars/${id}.json`)
+      .pipe(
+        map(
+          (data) => {
+          this._cars = this._cars.filter(car => car.id !== id);
+        }),
+      );
+  }
+
+  getCars(): Observable<Car[]> {
+    return this.http.get('https://fe3-course.firebaseio.com/cars.json')
+      .pipe(
+        map((data) => {
+          const cars: Car[] = [];
+          for (let key in data) {
+            cars.push({id: key, ...data[key]});
+          }
+          this._cars = cars;
+          return cars;
+        })
+      );
+  }
+
+  getCarById(id: string): Car {
+    console.log(this._cars);
     return this._cars.find((car: Car) => car.id === id);
   }
 

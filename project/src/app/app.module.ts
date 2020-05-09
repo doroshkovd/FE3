@@ -14,6 +14,7 @@ import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { NoCarsComponent } from './cars/no-cars/no-cars.component';
 import { AddEditCarComponent } from './cars/add-edit-car/add-edit-car.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AppRoutingModule,
   ],
   providers: [],

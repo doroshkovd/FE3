@@ -22,13 +22,20 @@ export class CarDetailComponent implements OnInit {
   ngOnInit(): void {
     this.carSubscription = this.route.paramMap
       .subscribe((paramMap: ParamMap) => {
-        this.car = this.carsService.getCarById(+paramMap.get('id'));
+        this.car = this.carsService.getCarById(paramMap.get('id'));
       });
   }
 
   addParts() {
     this.partsService.addParts(this.car.parts);
-    this.router.navigate(['shopping-list'])
+    this.router.navigate(['shopping-list']);
+    return false;
+  }
+
+  deleteCar(id: string) {
+    this.carsService.deleteCar(id).subscribe(() => {
+      this.router.navigate(['/cars']);
+    });
     return false;
   }
 }

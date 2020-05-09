@@ -5,7 +5,7 @@
 </div>
 <hr>
 <div class="row">
-  <div class="col-sm-12">
+  <div *ngIf="cars" class="col-sm-12">
     <app-car-item *ngFor="let car of cars; let i = index"
                   [car]="car"></app-car-item>
   </div>

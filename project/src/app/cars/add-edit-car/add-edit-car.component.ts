@@ -13,7 +13,7 @@ export class AddEditCarComponent implements OnInit {
 
   title: string;
   editCar: Car;
-  editCarId: number;
+  editCarId: string;
   isEdit = false;
   carForm: FormGroup;
 
@@ -36,7 +36,7 @@ export class AddEditCarComponent implements OnInit {
         if (paramMap.get('id')) {
           this.title = 'Edit Car';
           this.isEdit = true;
-          this.editCarId = +paramMap.get('id');
+          this.editCarId = paramMap.get('id');
         } else {
           this.title = 'Add Car';
         }
@@ -45,8 +45,26 @@ export class AddEditCarComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.carForm);
-    this.redirect();
+    if (this.isEdit) {
+      this._updateCar();
+      return false;
+    }
+
+    this._addCar();
+  }
+
+  _updateCar() {
+    this.carsService.updateCar(this.editCarId, this.carForm.value)
+      .subscribe((data) => {
+        this.redirect();
+      });
+  }
+
+  _addCar() {
+    this.carsService.addCar(this.carForm.value)
+      .subscribe((data) => {
+        this.redirect();
+      });
   }
 
   redirect() {
