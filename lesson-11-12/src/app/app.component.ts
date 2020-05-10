@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Post } from "./models/post";
 import { PostService } from "./services/post.service";
+import { AngularFireStorage } from "@angular/fire/storage";
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,20 @@ export class AppComponent implements OnInit {
 
   loadedPosts: Post[] = [];
 
-  constructor(private postServise: PostService) {
+  constructor(private postServise: PostService, private storage: AngularFireStorage) {
   }
 
   ngOnInit() {
+    this.storage.ref('гигиена.png')
+      .getDownloadURL().subscribe((data) => console.log(data) )
+  }
+
+  onFileChange(event) {
+    const file = event.target.files[0];
+    const filePath = 'pdf/some.pfd';
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file);
+    task.then((data) => console.log(data));
   }
 
   onCreatePost(postData: { title: string; content: string }) {
