@@ -14,10 +14,13 @@ export class CarListComponent implements OnInit {
   constructor(private carsService: CarsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.carsService.getCars()
-      .subscribe((data) => {
-        this.cars = data;
-      });
+    this.activatedRoute.data.subscribe((data) => {
+      this.cars = data.cars;
+    });
+    // this.carsService.getCars()
+    //   .subscribe((data) => {
+    //     this.cars = data;
+    //   });
   }
 
   onNewCarClick(): void {

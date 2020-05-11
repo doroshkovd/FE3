@@ -1,3 +1,4 @@
+<app-errors></app-errors>
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-6 offset-md-3">
@@ -42,9 +43,11 @@
     </div>
   </div>
   <div class="row">
-    <div *ngIf="loadedPosts?.length === 0" class="col-sm-12 col-md-6 offset-md-3">
+
+    <div *ngIf="loadedPosts?.length === 0 && !isLoading" class="col-sm-12 col-md-6 offset-md-3">
       <p>No posts available!</p>
     </div>
+    <div *ngIf="isLoading" class="col-sm-12 col-md-6 offset-md-3">Loading...</div>
     <ng-container *ngIf="loadedPosts.length > 0">
       <div *ngFor="let post of loadedPosts; let i = index" class="col-sm-12">
         <h2>{{post.title}}</h2>
@@ -55,5 +58,9 @@
         <hr>
       </div>
     </ng-container>
+    <div *ngIf="error" class="alert alert-danger">
+      <h2>{{error.error.error}}</h2>
+      {{ error.message }}
+    </div>
   </div>
 </div>

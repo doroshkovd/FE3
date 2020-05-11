@@ -12,6 +12,8 @@ import { PostService } from "./services/post.service";
 export class AppComponent implements OnInit {
 
   loadedPosts: Post[] = [];
+  isLoading = false;
+  error: any = null;
 
   constructor(private postServise: PostService) {
   }
@@ -20,14 +22,18 @@ export class AppComponent implements OnInit {
   }
 
   onCreatePost(postData: { title: string; content: string }) {
+    this.isLoading = true;
     this.postServise.addPost(postData).subscribe((data) => {
-        console.log(data);
+        this.isLoading = false;
       });
   }
 
   onFetchPosts() {
+    this.isLoading = true;
+    this.error = null;
     this.postServise.getAllPosts('2').subscribe((data: Post[]) => {
         this.loadedPosts = data;
+        this.isLoading = false;
       });
   }
 

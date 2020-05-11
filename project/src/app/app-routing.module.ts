@@ -5,6 +5,7 @@ import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { CarDetailComponent } from "./cars/car-detail/car-detail.component";
 import { NoCarsComponent } from "./cars/no-cars/no-cars.component";
 import { AddEditCarComponent } from "./cars/add-edit-car/add-edit-car.component";
+import { CarsResolver } from "./shared/services/cars/cars.resolver";
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: 'cars',
     component: CarsComponent,
+    resolve: { cars: CarsResolver },
     children: [
       { path: '', component: NoCarsComponent },
       { path: 'add', component: AddEditCarComponent },

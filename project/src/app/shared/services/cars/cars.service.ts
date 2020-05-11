@@ -3,6 +3,7 @@ import { Car } from "../../models/car.model";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map, tap } from "rxjs/operators";
+import { environment } from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class CarsService {
   constructor(private http: HttpClient) { }
 
   addCar(car) {
-    return this.http.post('https://fe3-course.firebaseio.com/cars.json', car)
+    return this.http.post(`${environment.api}/cars.json`, car)
       .pipe(
         tap((data: {name: string}) => {
           this._cars.push({id: data.name, ...car})
@@ -30,7 +31,7 @@ export class CarsService {
   }
 
   updateCar(id: string, car) {
-    return this.http.put(`https://fe3-course.firebaseio.com/cars/${id}.json`, car)
+    return this.http.put(`${environment.api}/cars/${id}.json`, car)
       .pipe(
         tap(() => {
           let index: number;
@@ -47,7 +48,7 @@ export class CarsService {
   }
 
   deleteCar(id) {
-    return this.http.delete(`https://fe3-course.firebaseio.com/cars/${id}.json`)
+    return this.http.delete(`${environment.api}/cars/${id}.json`)
       .pipe(
         map(
           (data) => {
@@ -63,7 +64,7 @@ export class CarsService {
   }
 
   getCars(): Observable<Car[]> {
-    return this.http.get('https://fe3-course.firebaseio.com/cars.json')
+    return this.http.get(`${environment.api}/cars.json`)
       .pipe(
         map((data) => {
           const cars: Car[] = [];
