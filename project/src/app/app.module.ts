@@ -14,7 +14,12 @@ import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { NoCarsComponent } from './cars/no-cars/no-cars.component';
 import { AddEditCarComponent } from './cars/add-edit-car/add-edit-car.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { AuthComponent } from "./auth/auth.component";
+import { ErrorsComponent } from "./shared/errors/errors.component";
+import { ErrorInterceptor } from "./shared/errors/error.interceptor";
+import { LoaderComponent } from "./shared/loader/loader.component";
+import { LoaderInterceptor } from "./shared/loader/loader.interceptor";
 
 @NgModule({
   declarations: [
@@ -29,6 +34,9 @@ import { HttpClientModule } from "@angular/common/http";
     DropdownDirective,
     NoCarsComponent,
     AddEditCarComponent,
+    AuthComponent,
+    ErrorsComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +45,10 @@ import { HttpClientModule } from "@angular/common/http";
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

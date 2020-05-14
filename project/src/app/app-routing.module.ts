@@ -6,6 +6,7 @@ import { CarDetailComponent } from "./cars/car-detail/car-detail.component";
 import { NoCarsComponent } from "./cars/no-cars/no-cars.component";
 import { AddEditCarComponent } from "./cars/add-edit-car/add-edit-car.component";
 import { CarsResolver } from "./shared/services/cars/cars.resolver";
+import { AuthComponent } from "./auth/auth.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
     ],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
+  { path: 'auth', component: AuthComponent },
 ];
 
 @NgModule({
