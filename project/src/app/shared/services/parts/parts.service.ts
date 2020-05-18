@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Part } from "../../models/part.model";
 import { BehaviorSubject, Subject } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { loader } from "../../loader/loader.decorator";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,9 @@ export class PartsService {
 
   constructor(private http: HttpClient) { }
 
-  getParts() {
-    this.http.get('https://fe3-course.firebaseio.com/parts.json')
+  @loader()
+  getParts(headers?: HttpHeaders) {
+    this.http.get('https://fe3-course.firebaseio.com/parts.json', {headers})
       .subscribe((data: any) => {
         const parts = [];
         console.log(data);

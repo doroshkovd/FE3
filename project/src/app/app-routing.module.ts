@@ -7,6 +7,8 @@ import { NoCarsComponent } from "./cars/no-cars/no-cars.component";
 import { AddEditCarComponent } from "./cars/add-edit-car/add-edit-car.component";
 import { CarsResolver } from "./shared/services/cars/cars.resolver";
 import { AuthComponent } from "./auth/auth.component";
+import { AuthGuard } from "./shared/services/auth/auth.guard";
+import { NoAuthGuard } from "./shared/services/auth/no-auth.guard";
 
 
 const routes: Routes = [
@@ -14,6 +16,7 @@ const routes: Routes = [
   {
     path: 'cars',
     component: CarsComponent,
+    canActivate: [ AuthGuard ],
     resolve: { cars: CarsResolver },
     children: [
       { path: '', component: NoCarsComponent },
@@ -22,8 +25,8 @@ const routes: Routes = [
       { path: 'edit/:id', component: AddEditCarComponent },
     ],
   },
-  { path: 'shopping-list', component: ShoppingListComponent },
-  { path: 'auth', component: AuthComponent },
+  { path: 'shopping-list', component: ShoppingListComponent, canActivate: [ AuthGuard ] },
+  { path: 'auth', component: AuthComponent, canActivate: [ NoAuthGuard ] },
 ];
 
 @NgModule({

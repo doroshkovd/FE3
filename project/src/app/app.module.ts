@@ -20,6 +20,7 @@ import { ErrorsComponent } from "./shared/errors/errors.component";
 import { ErrorInterceptor } from "./shared/errors/error.interceptor";
 import { LoaderComponent } from "./shared/loader/loader.component";
 import { LoaderInterceptor } from "./shared/loader/loader.interceptor";
+import { AuthInterceptor } from "./shared/services/auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { LoaderInterceptor } from "./shared/loader/loader.interceptor";
     AppRoutingModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],

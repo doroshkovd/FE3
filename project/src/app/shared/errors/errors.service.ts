@@ -10,14 +10,16 @@ export class ErrorsService {
   private _error: CustomError = null;
   private _errorSubject: BehaviorSubject<CustomError> = new BehaviorSubject(this._error);
   private _errorTimer: any;
+  private _style: string;
 
   get error() {
     return this._errorSubject;
   }
 
-  showError(error: CustomError) {
+  showError(error: CustomError, styleClass = 'danger') {
     this._error = error;
-    this._errorSubject.next(this._error);
+    this._style = styleClass;
+    this._errorSubject.next({...this._error, style: styleClass});
     this._errorTimer = setTimeout(() => {
       this.hideError();
     }, 4000);
