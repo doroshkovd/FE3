@@ -8,7 +8,7 @@ export const environment = {
   apiKey: 'AIzaSyAozAf0FtdGcdZzr25vRIsuITwll-eldpE',
   signUpUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=',
   loginUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=',
-  authRedirectUrl: '/shopping-list',
+  authRedirectUrl: '/cars',
 };
 
 /*
