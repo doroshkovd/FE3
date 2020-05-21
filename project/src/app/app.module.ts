@@ -21,6 +21,7 @@ import { ErrorInterceptor } from "./shared/errors/error.interceptor";
 import { LoaderComponent } from "./shared/loader/loader.component";
 import { LoaderInterceptor } from "./shared/loader/loader.interceptor";
 import { AuthInterceptor } from "./shared/services/auth/auth.interceptor";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AuthInterceptor } from "./shared/services/auth/auth.interceptor";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

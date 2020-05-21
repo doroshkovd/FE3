@@ -17,6 +17,7 @@ const routes: Routes = [
     path: 'cars',
     component: CarsComponent,
     canActivate: [ AuthGuard ],
+    data: {animation: 'Cars'},
     resolve: { cars: CarsResolver },
     children: [
       { path: '', component: NoCarsComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
       { path: 'edit/:id', component: AddEditCarComponent },
     ],
   },
-  { path: 'shopping-list', component: ShoppingListComponent, canActivate: [ AuthGuard ] },
+  { path: 'shopping-list', component: ShoppingListComponent, canActivate: [ AuthGuard ], data: {animation: 'Parts'} },
   { path: 'auth', component: AuthComponent, canActivate: [ NoAuthGuard ] },
 ];
 

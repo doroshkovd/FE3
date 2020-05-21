@@ -1,0 +1,20 @@
+<div class="modal fade" [ngClass]="{show: isShow}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          {{ title }}
+        </h4>
+        <button type="button" class="close" (click)="isShow = false">
+          <span>&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+        <ng-template app-anchor></ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="btn btn-danger" (click)="isShow = !isShow">Open modal</button>
+<div *ngIf="isShow" class="modal-backdrop"></div>

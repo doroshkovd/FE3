@@ -76,7 +76,7 @@ export class AuthService {
     setTimeout(() => {
       this.logout();
       this.errorService.showError({title: 'Auto logout', message: 'Auto logout'}, 'success');
-    }, 5000);
+    }, duration);
   }
 
   private _loginHandler(data: AuthResponse) {
