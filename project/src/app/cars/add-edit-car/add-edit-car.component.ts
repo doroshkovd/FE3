@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarsService } from "../../shared/services/cars/cars.service";
+import { CarsService } from "../cars.service";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Car } from "../../shared/models/car.model";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";

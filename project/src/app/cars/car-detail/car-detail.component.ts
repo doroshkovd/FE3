@@ -1,9 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Car } from "../../shared/models/car.model";
-import { CarsService } from "../../shared/services/cars/cars.service";
+import { CarsService } from "../cars.service";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { PartsService } from "../../shared/services/parts/parts.service";
+import { PartsService } from "../../shopping-list/parts.service";
 
 @Component({
   selector: 'app-car-detail',

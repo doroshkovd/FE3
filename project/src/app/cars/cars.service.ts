@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Car } from "../../models/car.model";
+import { Car } from "../shared/models/car.model";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map, tap } from "rxjs/operators";
-import { environment } from "../../../../environments/environment";
-import { loader } from "../../loader/loader.decorator";
+import { environment } from "../../environments/environment";
+import { loader } from "../shared/loader/loader.decorator";
 
 @Injectable({
   providedIn: 'root'

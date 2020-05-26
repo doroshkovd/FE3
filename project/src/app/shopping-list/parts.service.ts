@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Part } from "../../models/part.model";
+import { Part } from "../shared/models/part.model";
 import { BehaviorSubject, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { loader } from "../../loader/loader.decorator";
+import { loader } from "../shared/loader/loader.decorator";
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { AuthService } from "../shared/services/auth/auth.service";
-import { AuthResponse } from "../shared/services/auth/auth-response";
+import { AuthService } from "./auth.service";
+import { AuthResponse } from "./auth-response";
 
 @Component({
   selector: 'app-auth',

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Car } from "../../shared/models/car.model";
-import { CarsService } from "../../shared/services/cars/cars.service";
+import { CarsService } from "../cars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({

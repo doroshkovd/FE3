@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../../../environments/environment";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { AuthResponse } from "./auth-response";
 import { LoginUser } from "./user";
 import { Router } from "@angular/router";
-import { loader } from "../../loader/loader.decorator";
-import { ErrorsService } from "../../errors/errors.service";
+import { loader } from "../shared/loader/loader.decorator";
+import { environment } from "../../environments/environment";
+import { ErrorsService } from "../shared/errors/errors.service";
 
 @Injectable({
   providedIn: 'root',

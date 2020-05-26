@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Part } from "../../shared/models/part.model";
-import { PartsService } from "../../shared/services/parts/parts.service";
+import { PartsService } from "../parts.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
 
