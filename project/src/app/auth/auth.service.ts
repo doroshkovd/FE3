@@ -8,14 +8,20 @@ import { Router } from "@angular/router";
 import { loader } from "../shared/loader/loader.decorator";
 import { environment } from "../../environments/environment";
 import { ErrorsService } from "../shared/errors/errors.service";
+import { AppState } from "../store/app.reducer";
+import { Store } from "@ngrx/store";
+import * as authActions from './store/auth.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router, private errorService: ErrorsService) {}
-
-  user: BehaviorSubject<LoginUser> = new BehaviorSubject<LoginUser>(null);
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private errorService: ErrorsService,
+    private store: Store<AppState>
+  ) {}
 
   @loader()
   signUp(email: string, password: string, headers?: HttpHeaders) {
@@ -39,7 +45,7 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    this.store.dispatch(new authActions.LogoutAction());
     localStorage.removeItem('user');
     this.router.navigate(['/auth']);
   }
@@ -66,7 +72,7 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.user.next(loadedUser);
+      this.store.dispatch(new authActions.LoginAction(loadedUser));
       const duration = (new Date(user._expirationDate)).getTime() - (new Date().getTime());
       this.autoLogout(duration);
     }
@@ -89,7 +95,8 @@ export class AuthService {
       data.idToken,
       expirationDate
     );
-    this.user.next(user);
+    this.store.dispatch(new authActions.LoginAction(user));
+
     localStorage.setItem('user', JSON.stringify(user));
     this.autoLogout(Number(data.expiresIn)*1000);
     this.router.navigate([environment.authRedirectUrl]);

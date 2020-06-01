@@ -5,17 +5,21 @@ import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { LoginUser } from "./user";
 import { environment } from "../../environments/environment";
+import { AppState } from "../store/app.reducer";
+import { Store } from "@ngrx/store";
+import { AuthState } from "./store/auth.reducer";
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class NoAuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    return this.authService.user.pipe(
+    return this.store.select('auth').pipe(
       take(1),
+      map((state: AuthState) => state.user),
       map((user: LoginUser) => {
         if (!user) {
           return true;

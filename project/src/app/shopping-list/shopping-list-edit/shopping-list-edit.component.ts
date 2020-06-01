@@ -3,6 +3,10 @@ import { Part } from "../../shared/models/part.model";
 import { PartsService } from "../parts.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { Store } from "@ngrx/store";
+import * as shoppingListActions from '../store/shopping-list.actions';
+import { ShoppingListState } from "../store/shopping-list.reducer";
+import { AppState } from "../../store/app.reducer";
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -15,15 +19,17 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   editedElement: Part;
   editedIndex: number;
   editedElementSubscription: Subscription;
-  constructor(private partsService: PartsService) { }
+  constructor(
+    private partsService: PartsService,
+    private store: Store<AppState>
+    ) { }
 
   ngOnInit(): void {
-    this.editedElementSubscription = this.partsService.editedElement
-      .subscribe((element: {part: Part, index: number}) => {
-        console.log(element);
-        if (element) {
-          this.editedElement = element.part;
-          this.editedIndex = element.index;
+    this.editedElementSubscription = this.store.select('shoppingList')
+      .subscribe((state: ShoppingListState) => {
+        if (state.editedPart) {
+          this.editedElement = state.editedPart;
+          this.editedIndex = state.editedIndex;
           this.isEdit = true;
           this.form.setValue({name: this.editedElement.name, amount: this.editedElement.amount });
         }
@@ -45,7 +51,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.partsService.deletePart(this.editedIndex);
+    this.store.dispatch(new shoppingListActions.DeletePart());
     this.onClear();
   }
 
@@ -55,10 +61,11 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       amount,
     };
     if (!this.isEdit) {
-      this.partsService.addParts([part]);
+      this.store.dispatch(new shoppingListActions.AddPart([part]));
     } else {
       part.id = this.editedElement.id;
-      this.partsService.editPart(part, this.editedIndex);
+      this.store.dispatch(new shoppingListActions.UpdatePart(part));
+
     }
     this.isEdit = false;
   }

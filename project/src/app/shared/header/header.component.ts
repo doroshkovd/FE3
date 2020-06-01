@@ -2,6 +2,10 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/cor
 import { Subscription } from "rxjs";
 import { LoginUser } from "../../auth/user";
 import { AuthService } from "../../auth/auth.service";
+import { AppState } from "../../store/app.reducer";
+import { Store } from "@ngrx/store";
+import { AuthState } from "../../auth/store/auth.reducer";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
@@ -11,15 +15,18 @@ import { AuthService } from "../../auth/auth.service";
 
 export class HeaderComponent implements OnInit, OnDestroy {
   collapsed = false;
-  $user = this.authService.user;
+  $user = this.store.select('auth');
   userEmail: string;
   userEmailSubscription: Subscription;
 
-  constructor(public authService: AuthService) {
+  constructor(private store: Store<AppState>, private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.authService.user
+    this.userEmailSubscription = this.store.select('auth')
+      .pipe(
+        map((state: AuthState) => state.user )
+      )
       .subscribe((user: LoginUser) => {
         if (!!user) {
           this.userEmail = user.email;
