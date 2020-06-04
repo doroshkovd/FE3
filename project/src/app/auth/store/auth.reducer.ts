@@ -1,6 +1,5 @@
 import { LoginUser } from "../user";
-import { Action } from "@ngrx/store";
-import { AuthActions } from "./auth.actions";
+import { AuthActions, LOGIN_SUCCESS, LOGOUT_END } from "./auth.actions";
 
 export interface AuthState {
   user: LoginUser;
@@ -12,13 +11,14 @@ export const  initialAuthState: AuthState = {
 
 export function authReducer(state: AuthState = initialAuthState, action: AuthActions) {
   switch (action.type) {
-    case "LOGIN":
+    case LOGIN_SUCCESS:
+      console.log('Reducer login success action')
       return {
         ...state,
         user: action.payload,
       };
 
-      case "LOGOUT":
+      case LOGOUT_END:
         return {
           ...state,
           user: null,

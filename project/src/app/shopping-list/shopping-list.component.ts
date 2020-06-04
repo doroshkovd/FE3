@@ -1,32 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Part } from "../shared/models/part.model";
-import { PartsService } from "./parts.service";
-import { Observable, Subscription } from "rxjs";
-import { Store } from "@ngrx/store";
-import { ShoppingListState } from "./store/shopping-list.reducer";
-import * as shoppingListActions from './store/shopping-list.actions';
-import { AppState } from "../store/app.reducer";
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss']
+  styleUrls: ['./shopping-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShoppingListComponent implements OnInit {
-  parts$: Observable<ShoppingListState>;
+export class ShoppingListComponent {
 
-  constructor(
-    private partsService: PartsService,
-    private store: Store<AppState>
-  ) {
-  }
+  @Input() parts: Part[];
+  @Output() editElement: EventEmitter<number> = new EventEmitter();
 
-  ngOnInit(): void {
-    this.parts$ = this.store.select('shoppingList');
+  constructor() {
   }
 
   onEditElement(index) {
-    // this.partsService.onEditPart(index);
-    this.store.dispatch(new shoppingListActions.SetEditedPart(index));
+    this.editElement.emit(index);
   }
 }

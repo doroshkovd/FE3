@@ -3,6 +3,7 @@ import { Part } from "../shared/models/part.model";
 import { BehaviorSubject, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { loader } from "../shared/loader/loader.decorator";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -23,26 +24,23 @@ export class PartsService {
 
   @loader()
   getParts(headers?: HttpHeaders) {
-    this.http.get('https://fe3-course.firebaseio.com/parts.json', {headers})
-      .subscribe((data: any) => {
-        const parts = [];
-        console.log(data);
-        for (let key in data) {
-          parts.push({id: key, ...data[key]});
-        }
-
-        this._parts = parts;
-        console.log(this._parts);
-        this._listChange.next(this._parts);
-      });
+    return this.http.get('https://fe3-course.firebaseio.com/parts.json', {headers})
+      .pipe(
+        map((data) => {
+          const parts = [];
+          for (let key in data) {
+            parts.push({id: key, ...data[key]});
+          }
+          return parts;
+        }));
   }
 
   addParts(parts: Part[]) {
-    this.http.post('https://fe3-course.firebaseio.com/parts.json', parts[0])
-      .subscribe((data: any) => {
-        this._parts.push({id: data.name, ...parts[0]});
-        this._listChange.next(this._parts);
-      });
+    return this.http.post('https://fe3-course.firebaseio.com/parts.json', parts[0])
+      .pipe(
+        map((data: any) => {
+          return {id: data.name, ...parts[0]};
+        }));
   }
 
   onEditPart(index) {

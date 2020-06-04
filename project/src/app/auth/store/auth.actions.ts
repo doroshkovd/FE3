@@ -1,23 +1,50 @@
 import { Action } from "@ngrx/store";
 import { LoginUser } from "../user";
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+export const LOGIN_START = '[Auth] LOGIN_START';
+export const LOGIN_SUCCESS = '[Auth] LOGIN_SUCCESS';
+export const LOGIN_FAILED = '[Auth] LOGIN_FAILED';
+export const LOGOUT_START = '[Auth] LOGOUT_START';
+export const LOGOUT_END = '[Auth] LOGOUT_END';
 
-export class LoginAction implements Action {
-  readonly type = LOGIN;
 
+
+export  class LoginStartAction implements Action {
+  readonly type = LOGIN_START;
+
+  constructor(public payload: {email: string, password: string}){
+    console.log('Start login action')
+  }
+}
+
+export class LoginSuccessAction implements Action {
+  readonly type = LOGIN_SUCCESS;
   constructor(public payload: LoginUser) {
-    console.log(LOGIN);
+    console.log('Success login action')
+
   }
 }
 
-export class LogoutAction implements Action {
-  readonly type = LOGOUT;
+export class LoginFailedAction implements Action {
+  readonly type = LOGIN_FAILED;
+  constructor(public payload: any) {}
+}
 
+export class LogoutStartAction implements Action {
+  readonly type = LOGOUT_START;
   constructor() {
-    console.log(LOGOUT);
   }
 }
 
-export type AuthActions = LogoutAction | LoginAction;
+export class LogoutEndAction implements Action {
+  readonly type = LOGOUT_END;
+  constructor() {
+  }
+}
+
+export type AuthActions =
+  LogoutStartAction |
+  LoginSuccessAction |
+  LoginFailedAction |
+  LoginStartAction |
+  LogoutEndAction;

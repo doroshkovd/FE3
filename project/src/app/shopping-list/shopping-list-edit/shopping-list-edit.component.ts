@@ -61,7 +61,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       amount,
     };
     if (!this.isEdit) {
-      this.store.dispatch(new shoppingListActions.AddPart([part]));
+      this.store.dispatch(new shoppingListActions.AddPartStartAction([part]));
     } else {
       part.id = this.editedElement.id;
       this.store.dispatch(new shoppingListActions.UpdatePart(part));

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { AuthResponse } from "./auth-response";
 import { LoginUser } from "./user";
 import { Router } from "@angular/router";
@@ -38,16 +38,17 @@ export class AuthService {
     return this.http.post(`${environment.loginUrl}${environment.apiKey}`,
       {email, password, returnSecureToken: true }, { headers }
       ).pipe(
-      tap((data: AuthResponse) => {
-        this._loginHandler(data);
+        tap(() => {
+          console.log('Service login')
+        }),
+      map((data: AuthResponse) => {
+        return this._loginHandler(data);
       })
     );
   }
 
   logout() {
-    this.store.dispatch(new authActions.LogoutAction());
     localStorage.removeItem('user');
-    this.router.navigate(['/auth']);
   }
 
   autoLogin() {
@@ -72,7 +73,7 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.store.dispatch(new authActions.LoginAction(loadedUser));
+      this.store.dispatch(new authActions.LoginSuccessAction(loadedUser));
       const duration = (new Date(user._expirationDate)).getTime() - (new Date().getTime());
       this.autoLogout(duration);
     }
@@ -95,10 +96,7 @@ export class AuthService {
       data.idToken,
       expirationDate
     );
-    this.store.dispatch(new authActions.LoginAction(user));
 
-    localStorage.setItem('user', JSON.stringify(user));
-    this.autoLogout(Number(data.expiresIn)*1000);
-    this.router.navigate([environment.authRedirectUrl]);
+    return user;
   }
 }

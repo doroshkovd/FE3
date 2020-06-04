@@ -1,5 +1,14 @@
 import { Part } from "../../shared/models/part.model";
-import { ADD_PART, DELETE_PART, SET_EDITED_PART, ShoppingListActions, UPDATE_PART } from "./shopping-list.actions";
+import {
+  ADD_PART_FAILED,
+  ADD_PART_SUCCESS,
+  DELETE_PART,
+  GET_PART_FAILED,
+  GET_PART_SUCCESS,
+  SET_EDITED_PART,
+  ShoppingListActions,
+  UPDATE_PART
+} from "./shopping-list.actions";
 
 export interface ShoppingListState {
   parts: Part[];
@@ -8,20 +17,33 @@ export interface ShoppingListState {
 }
 
 const initialShoppingListState: ShoppingListState = {
-  parts: [
-    {id: '1', amount: 12, name: 'Part 1'},
-    {id: '2', amount: 24, name: 'Part 2'},
-  ],
+  parts: [],
   editedPart: null,
   editedIndex: -1,
 };
 
 export function shoppingListReducer(state: ShoppingListState = initialShoppingListState, action: ShoppingListActions) {
   switch(action.type) {
-    case ADD_PART:
+    case GET_PART_SUCCESS:
+      return {
+        ...state,
+        parts: action.payload,
+      };
+
+    case GET_PART_FAILED:
+      return {
+        ...state
+      };
+
+    case ADD_PART_SUCCESS:
       return {
         ...state,
         parts: [...state.parts, ...action.payload],
+      };
+
+    case ADD_PART_FAILED:
+      return {
+        ...state
       };
 
     case UPDATE_PART:

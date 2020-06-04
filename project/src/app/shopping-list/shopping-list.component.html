@@ -4,7 +4,7 @@
     <hr>
     <app-shopping-list-edit></app-shopping-list-edit>
     <div class="list-group">
-      <a *ngFor="let part of (parts$ | async).parts; let i = index;" class="list-group-item list-group-item-action"
+      <a *ngFor="let part of parts; let i = index;" class="list-group-item list-group-item-action"
       (click)="onEditElement(i)">
         {{part.name}} ({{part.amount}})
       </a>

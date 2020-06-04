@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { ShoppingListComponent } from "./shopping-list.component";
 import { ShoppingListEditComponent } from "./shopping-list-edit/shopping-list-edit.component";
 import { ShoppingListRoutingModule } from "./shopping-list-routing.module";
+import { ShoppingListContainer } from "./shopping-list.container";
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { ShoppingListRoutingModule } from "./shopping-list-routing.module";
   declarations: [
     ShoppingListComponent,
     ShoppingListEditComponent,
+    ShoppingListContainer,
   ]
 })
 

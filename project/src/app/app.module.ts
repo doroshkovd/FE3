@@ -12,8 +12,12 @@ import { SharedModule } from "./shared/shared.module";
 import { AuthInterceptor } from "./auth/auth.interceptor";
 import { AuthModule } from "./auth/auth.module";
 import { StoreModule } from "@ngrx/store";
-import { shoppingListReducer } from "./shopping-list/store/shopping-list.reducer";
 import { appReducer } from "./store/app.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { AuthEffects } from "./auth/store/auth.effects";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "../environments/environment";
+import { ShoppingListEffects } from "./shopping-list/store/shopping-list.effects";
 
 @NgModule({
   declarations: [
@@ -23,6 +27,11 @@ import { appReducer } from "./store/app.reducer";
     BrowserModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([
+      AuthEffects,
+      ShoppingListEffects,
+    ]),
+    StoreDevtoolsModule.instrument({logOnly: environment.production}),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
